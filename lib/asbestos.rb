@@ -46,7 +46,7 @@ module Asbestos
       @target
     end
     
-    def instruct!
+    def instruct!(*args)
     end
     
     def tag!(sym, *args, &block)

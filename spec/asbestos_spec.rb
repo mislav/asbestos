@@ -54,6 +54,11 @@ describe Asbestos::Builder do
     to_json.should == '{}'
   end
   
+  it "should ignore instruct when used with attributes" do
+    @json.instruct! :xml, :version => "1.0" 
+    to_json.should == '{}'
+  end
+  
   it "should support ignores" do
     @json = described_class.new(:ignore => ['foo'])
     @json.foo do
