@@ -80,8 +80,7 @@ module Asbestos
           end
         else
           raise ArgumentError, "don't know what to do with attributes" if attrs
-          method = method.pluralize if _aggregates.include?(method)
-          _write_pair(method, value)
+          _write_pair(method, value, _aggregates.include?(method))
         end
       end
     end
@@ -96,13 +95,14 @@ module Asbestos
       @options[:aggregate] ||= []
     end
     
-    def _write_pair(key, value)
+    def _write_pair(key, value, aggregate = false)
       key = key.to_s.gsub('-', '_')
-      if @target[key].nil?
-        @target[key] = value
-      else
-        @target[key] = [@target[key]] unless @target[key].is_a?(Array)
+      if aggregate
+        key = key.pluralize
+        @target[key] ||= []
         @target[key] << value
+      else
+        @target[key] = value
       end
     end
     

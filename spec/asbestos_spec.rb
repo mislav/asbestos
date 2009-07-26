@@ -84,4 +84,10 @@ describe Asbestos::Builder do
     @json.tag!(:foo, 'bar')
     to_json.should == '{"foos": ["bar", "bar"]}'
   end
+  
+  it "should not aggregate when not asked" do
+    @json.tag!(:foo, 'bar')
+    @json.tag!(:foo, 'bar')
+    to_json.should == '{"foo": "bar"}'
+  end
 end
