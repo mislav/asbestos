@@ -77,4 +77,11 @@ describe Asbestos::Builder do
     end
     to_json.should == '{"foos": [{"bar": "baz"}, {"bar": "qux"}]}'
   end
+  
+  it "should support value aggregates" do
+    @json = described_class.new(:aggregate => ['foo'])
+    @json.tag!(:foo, 'bar')
+    @json.tag!(:foo, 'bar')
+    to_json.should == '{"foos": ["bar", "bar"]}'
+  end
 end

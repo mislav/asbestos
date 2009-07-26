@@ -80,6 +80,7 @@ module Asbestos
           end
         else
           raise ArgumentError, "don't know what to do with attributes" if attrs
+          method = method.pluralize if _aggregates.include?(method)
           _write_pair(method, value)
         end
       end
@@ -96,7 +97,13 @@ module Asbestos
     end
     
     def _write_pair(key, value)
-      @target[key.to_s.gsub('-', '_')] = value
+      key = key.to_s.gsub('-', '_')
+      if @target[key].nil?
+        @target[key] = value
+      else
+        @target[key] = [@target[key]] unless @target[key].is_a?(Array)
+        @target[key] << value
+      end
     end
     
     def _new_hash
