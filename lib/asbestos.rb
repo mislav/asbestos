@@ -97,13 +97,7 @@ module Asbestos
     
     def _write_pair(key, value, aggregate = false)
       key = key.to_s.gsub('-', '_')
-      if aggregate
-        key = key.pluralize
-        @target[key] ||= []
-        @target[key] << value
-      else
-        @target[key] = value
-      end
+      aggregate ? (@target[key.pluralize] ||= []) << value : @target[key] = value
     end
     
     def _new_hash
