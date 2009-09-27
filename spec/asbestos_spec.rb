@@ -19,6 +19,11 @@ describe Asbestos::Builder do
     to_json.should == '{"foo":"bar"}'
   end
 
+  it "should work when clashing with existing ruby methods like 'type'" do
+    @json.type('bar')
+    to_json.should == '{"type":"bar"}'
+  end
+  
   it "should add a key-value pair with `tag!`" do
     @json.tag!(:foo, 'bar')
     to_json.should == '{"foo":"bar"}'

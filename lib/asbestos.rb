@@ -36,7 +36,7 @@ module Asbestos
     end
   end
   
-  class Builder
+  class Builder < BlankSlate
     def initialize(options = {})
       @target = _new_hash
       @options = options
