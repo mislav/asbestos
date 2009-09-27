@@ -16,22 +16,22 @@ describe Asbestos::Builder do
   
   it "should add a key-value pair" do
     @json.foo('bar')
-    to_json.should == '{"foo": "bar"}'
+    to_json.should == '{"foo":"bar"}'
   end
-  
+
   it "should add a key-value pair with `tag!`" do
     @json.tag!(:foo, 'bar')
-    to_json.should == '{"foo": "bar"}'
+    to_json.should == '{"foo":"bar"}'
   end
   
   it "should not cast numbers to strings" do
     @json.num(2)
-    to_json.should == '{"num": 2}'
+    to_json.should == '{"num":2}'
   end
   
   it "should case values to strings if there are more than one" do
     @json.num(2, 3)
-    to_json.should == '{"num": "23"}'
+    to_json.should == '{"num":"23"}'
   end
   
   it "should do nested hashes with block form" do
@@ -39,14 +39,14 @@ describe Asbestos::Builder do
       @json.bar('baz')
       @json.qoo('qux')
     end
-    to_json.should == '{"foo": {"bar": "baz", "qoo": "qux"}}'
+    to_json.should == '{"foo":{"bar":"baz","qoo":"qux"}}'
   end
   
   it "should do nested hashes with block form and attributes" do
     @json.foo(:qoo => 'qux') do
       @json.bar('baz')
     end
-    to_json.should == '{"foo": {"qoo": "qux", "bar": "baz"}}'
+    to_json.should == '{"foo":{"qoo":"qux","bar":"baz"}}'
   end
   
   it "should ignore instruct" do
@@ -64,7 +64,7 @@ describe Asbestos::Builder do
     @json.foo do
       @json.bar('baz')
     end
-    to_json.should == '{"bar": "baz"}'
+    to_json.should == '{"bar":"baz"}'
   end
   
   it "should support aggregates" do
@@ -75,19 +75,20 @@ describe Asbestos::Builder do
     @json.foo do
       @json.bar('qux')
     end
-    to_json.should == '{"foos": [{"bar": "baz"}, {"bar": "qux"}]}'
+    to_json.should == '{"foos":[{"bar":"baz"},{"bar":"qux"}]}'
   end
   
   it "should support value aggregates" do
     @json = described_class.new(:aggregate => ['foo'])
     @json.tag!(:foo, 'bar')
     @json.tag!(:foo, 'bar')
-    to_json.should == '{"foos": ["bar", "bar"]}'
+    to_json.should == '{"foos":["bar","bar"]}'
   end
   
   it "should not aggregate when not asked" do
     @json.tag!(:foo, 'bar')
     @json.tag!(:foo, 'bar')
-    to_json.should == '{"foo": "bar"}'
+    to_json.should == '{"foo":"bar"}'
   end
+  
 end
