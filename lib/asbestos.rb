@@ -30,8 +30,14 @@ module Asbestos
       end
       
       render :text => @template.with_template(template) {
-        @template.send(:_evaluate_assigns_and_ivars)
-        @template.send(compiled_name)
+        @template.send(:_evaluate_assigns_and_ivars)        
+        result = @template.send(compiled_name)
+        # support JSON-P
+        if callback = options[:callback]
+          "#{callback}(#{result})"
+        else
+          result
+        end
       }
     end
   end
